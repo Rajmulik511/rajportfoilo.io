@@ -44,6 +44,7 @@ section{
     justify-content: space-between;
 }
 section .title{
+
     position: relative;
     text-align: center;
     font-size: 40px;
@@ -315,6 +316,7 @@ section .title::after{
 .skills .title::after{
     content: "what i know";
 }
+
 .skills .skills-content .column{
     width: calc(50% - 30px);
 }
@@ -648,4 +650,123 @@ span:nth-child(5) {
     margin: 0;
     
   }
+}
+
+
+
+
+/** ---- Portfolio ---- **/
+
+#portfolio{
+    padding: 50px 30px;
+    color: white;
+    background-color: black;
+}
+#portfolio .title::after{
+    content: "what i did";
+    background: #111;
+}
+#portfolio .title::before{
+    background: #fff;
+}
+.work-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+
+.work{
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.work img{
+    width: 100%;
+    display: block;
+    transition: transform .25s;
+}
+
+.layer{
+    width: 100%;
+    height: 0;
+    background: rgb(4,92,177);
+background: linear-gradient(0deg, rgba(4,92,177,0.7792366946778712) 13%, rgba(0,203,236,0.5047268907563025) 68%);
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    font-size: .875rem;
+    transition: height .25s
+}
+
+.layer h3{
+    font-size: 2.5em;
+    color: black;
+}
+
+.layer p{
+    font-size: 1.2em;
+    color: black;
+}
+
+.layer h3, .layer p{
+    margin-bottom: 20px;
+}
+
+.layer a{
+    display: inline-block;
+    margin: 20px;
+    font-size: 1.6rem;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 17px;
+    border-radius: 10%;
+}
+
+.work:hover img{
+    transform: scale(1.1);
+}
+
+.work:hover .layer{
+    height: 100%;
+}
+
+.btn{
+    display: block;
+    width: fit-content;
+    padding: 14px 40px;
+    border-radius: 35px;
+    transition: background-color .25s;
+    cursor: pointer;
+    display: inline-block;
+    background-color: var(--secondaryColor);
+    color: var(--thirdColor);
+    margin-bottom: 50px;
+    transition: transform .25s;
+}
+
+.btn:hover{
+    transform: scale(1.1);
+    color: aqua;
+}
+
+
+section .title1{
+
+    position: relative;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+    font-family: 'Ubuntu', sans-serif;
 }
