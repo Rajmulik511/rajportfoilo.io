@@ -375,20 +375,21 @@ section .title::after{
     width: 100%;
 }
 .skills-content .right .python::before{
-    width: 80%;
+    width: 90%;
 }
 .skills-content .right .cpp::before{
-    width: 70%;
+    width: 80%;
 }
 .skills-content .right .press::before{
     width: 90%;
 }
-.skills-content .right .canva::before{
-    width: 90%;
-}
 .skills-content .right .mysql::before{
-    width: 50%;
+    width: 70%;
 }
+.skills-content .right .canva::before{
+    width: 100%;
+}
+
 
 .teams .carousel .card{
     background: #222;
