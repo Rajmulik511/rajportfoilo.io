@@ -55,6 +55,17 @@
             font-family: monospace;
         }
 
+        /* Typing cursor animation */
+        .cursor {
+            animation: blink 1s infinite;
+            font-weight: 100;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .animated-section {
             opacity: 0;
             transition: opacity 1s ease-in;
@@ -126,7 +137,7 @@
             <!-- Hero Section -->
             <section class="py-16 md:py-24 flex flex-col md:flex-row items-center animated-section">
                 <div class="md:w-3/5">
-                    <h2 class="text-4xl md:text-5xl font-light mb-4 text-center md:text-left">Hello, I'm Raj.</h2>
+                    <h2 class="text-4xl md:text-5xl font-light mb-4 text-center md:text-left" id="typing-text">Hello, I'm <span id="dynamic-text"></span><span class="cursor">|</span></h2>
                     <p class="text-lg mb-8 leading-relaxed max-w-xl mx-auto md:mx-0 text-left px-4 md:px-0">A passionate DevOps Support
                         Engineer with experience in cloud infrastructure, automation, and full-stack development.
                         Currently ensuring high availability of critical applications at Cognizant. I enjoy building
@@ -143,27 +154,21 @@
 
                 </div>
                 <div class="md:w-2/5 mt-10 md:mt-0 flex justify-center">
-                    <svg width="250" height="300" viewBox="0 0 236 303" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        class="stroke-current">
-                        <path
-                            d="M110.5 41.5C110.5 41.5 102.5 13.5 125 1.5C147.5 -10.5 167.5 16.5 169 32.5C170.5 48.5 167.5 54 167.5 54"
-                            stroke-width="2" />
-                        <path d="M123.5 32.5C123.5 32.5 130.1 31.3 133 32.5C135.9 33.7 137.5 37.5 137.5 37.5"
-                            stroke-width="2" />
-                        <rect x="119" y="32" width="23" height="11" rx="5.5" stroke-width="2" />
-                        <path d="M178 72C178 72 201 59.5 220.5 75.5C240 91.5 233.5 124 233.5 124" stroke-width="2" />
-                        <path d="M1 106.5C1 106.5 15.5 109 23 106.5C30.5 104 36 97 36 97" stroke-width="2" />
-                        <rect x="36" y="97" width="142" height="152" rx="12" stroke-width="2" />
-                        <path d="M94.5 97V249" stroke-width="2" />
-                        <rect x="49" y="112" width="33" height="30" rx="4" stroke-width="2" />
-                        <path d="M49 133.5C49 133.5 60.5 123.5 65.5 133.5" stroke-width="2" />
-                        <path d="M178 206H36" stroke-width="2" />
-                        <path d="M36 249C36 249 36 269 51.5 278.5C67 288 88.5 281 88.5 281" stroke-width="2" />
-                        <path d="M88.5 281V301.5" stroke-width="2" />
-                        <path d="M178 249C178 249 178 269 162.5 278.5C147 288 125.5 281 125.5 281" stroke-width="2" />
-                        <path d="M125.5 281V301.5" stroke-width="2" />
-                    </svg>
+                    <img src="Images/FloatingImageRaj.png" alt="Raj Profile" class="w-72 h-auto transition-transform duration-300 hover:scale-105 animate-float">
                 </div>
+                <style>
+                    @keyframes float {
+                        0%, 100% {
+                            transform: translateY(0);
+                        }
+                        50% {
+                            transform: translateY(-20px);
+                        }
+                    }
+                    .animate-float {
+                        animation: float 3s ease-in-out infinite;
+                    }
+                </style>
             </section>
 
             <!-- Experience Section -->
@@ -402,7 +407,7 @@
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="w-5 h-5">
                                     <path
-                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5 28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
                                     </path>
                                     <path d="M9 18c-4.51 2-5-2-7-2"></path>
                                 </svg>
@@ -436,6 +441,51 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Typing Animation ---
+            const dynamicText = document.getElementById('dynamic-text');
+            const words = ['Developer', 'Raj.'];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let isFirstRun = !localStorage.getItem('animationShown');
+
+            function typeEffect() {
+                const currentWord = words[wordIndex];
+                
+                if (!isFirstRun) {
+                    dynamicText.textContent = 'Raj.';
+                    return;
+                }
+
+                if (isDeleting) {
+                    dynamicText.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    dynamicText.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                if (!isDeleting && charIndex === currentWord.length && wordIndex === 0) {
+                    setTimeout(() => {
+                        isDeleting = true;
+                    }, 500);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex++;
+                    if (wordIndex === words.length) {
+                        localStorage.setItem('animationShown', 'true');
+                        isFirstRun = false;
+                        return;
+                    }
+                }
+
+                const typingSpeed = isDeleting ? 100 : 200;
+                setTimeout(typeEffect, typingSpeed);
+            }
+
+            // Start the typing animation
+            typeEffect();
+
             // --- Data ---
             const skills = {
                 toolsAndFrameworks: [
@@ -618,6 +668,31 @@
                     window.location.href = mailtoLink;
                 }
             });
+
+            // Add a way to reset animation for testing (hidden feature)
+            document.getElementById('typing-text').addEventListener('dblclick', () => {
+                localStorage.removeItem('animationShown');
+                location.reload();
+            });
+
+            // Remove red border on input
+            [nameInput, emailInput, messageInput].forEach(input => {
+                input.addEventListener('input', () => {
+                    if (input.value.trim() !== '') {
+                        input.classList.remove('border-red-500', 'dark:border-red-500');
+                    }
+                });
+            });
+
+            // Initial setup
+            setupCanvas();
+            initParticles();
+            animateParticles();
+        });
+    </script>
+</body>
+
+</html>
 
             // Remove red border on input
             [nameInput, emailInput, messageInput].forEach(input => {
