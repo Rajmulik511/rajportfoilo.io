@@ -440,7 +440,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             // --- Typing Animation ---
             const dynamicText = document.getElementById('dynamic-text');
             const words = ['Developer', 'Raj.'];
@@ -691,25 +691,4 @@
         });
     </script>
 </body>
-
 </html>
-
-            // Remove red border on input
-            [nameInput, emailInput, messageInput].forEach(input => {
-                input.addEventListener('input', () => {
-                    if (input.value.trim() !== '') {
-                        input.classList.remove('border-red-500', 'dark:border-red-500');
-                    }
-                });
-            });
-
-            // Initial setup
-            setupCanvas();
-            initParticles();
-            animateParticles();
-        });
-    </script>
-</body>
-
-</html>
-
