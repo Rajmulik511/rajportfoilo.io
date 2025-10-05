@@ -13,14 +13,36 @@
         }
     </script>
     <style>
-        /* Enable smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Resume Button Animations */
+        .skill-bar-container {
+            overflow: hidden;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.05);
+        }
+        .dark .skill-bar-container {
+            background: rgba(255,255,255,0.05);
+        }
+        .skill-bar-fill {
+            width: 0;
+            height: 100%;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .skill-bar-container.animate .skill-bar-fill {
+            width: var(--skill-width);
+        }
 
-        /* Option 4: Pulse Animation */
+        .animated-section {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        .animated-section.is-visible {
+            opacity: 1;
+        }
+
+        /* Resume Button Animations */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -29,8 +51,6 @@
         .resume-btn-pulse:hover {
             animation: pulse 1s infinite;
         }
-
-        /* Option 5: Border Animation */
         .resume-btn-border {
             position: relative;
             overflow: hidden;
@@ -48,34 +68,17 @@
         .resume-btn-border:hover:after {
             width: 100%;
         }
-
-
-        /* Define the base font and scroll animations */
         body {
             font-family: monospace;
         }
-
-        /* Typing cursor animation */
         .cursor {
             animation: blink 1s infinite;
             font-weight: 100;
         }
-
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
-
-        .animated-section {
-            opacity: 0;
-            transition: opacity 1s ease-in;
-        }
-
-        .animated-section.is-visible {
-            opacity: 1;
-        }
-
-        /* Style for the background canvas */
         #space-canvas {
             position: fixed;
             top: 0;
@@ -83,7 +86,6 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Place it behind all other content */
         }
     </style>
 </head>
@@ -503,8 +505,8 @@
 
             // --- Populate Skills ---
             const createSkillBar = (level) => `
-                <div class="w-24 h-4 border border-black dark:border-white flex items-center p-0.5">
-                    <div style="width: ${level * 20}%" class="h-full bg-black dark:bg-white"></div>
+                <div class="w-24 h-4 border border-black dark:border-white flex items-center p-0.5 skill-bar-container" style="--skill-width: ${level * 20}%">
+                    <div class="skill-bar-fill bg-black dark:bg-white"></div>
                 </div>
             `;
 
@@ -522,6 +524,32 @@
                 skillDiv.className = 'flex items-center justify-between';
                 skillDiv.innerHTML = `<span>${skill.name}</span> ${createSkillBar(skill.level)}`;
                 langContainer.appendChild(skillDiv);
+            });
+
+            // Initialize skill bars
+            const initSkillBars = () => {
+                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.transform = 'translateX(-100%)';
+                });
+            };
+
+            // Animate skill bars when they come into view
+            const skillBarsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        skillBarsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.skill-bar-container').forEach(bar => {
+                skillBarsObserver.observe(bar);
+            });
+
+            // Observe all skill bars
+            document.querySelectorAll('.skill-bar-container').forEach(bar => {
+                skillBarsObserver.observe(bar);
             });
 
             // --- Dark Mode Toggle ---
@@ -692,4 +720,3 @@
     </script>
 </body>
 </html>
-
