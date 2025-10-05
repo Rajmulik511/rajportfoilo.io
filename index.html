@@ -99,7 +99,7 @@
         <!-- Header -->
         <header
             class="flex justify-between items-center py-6 border-b border-black dark:border-white sticky top-0 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-10">
-            <h1 class="text-lg font-semibold tracking-wider">Raj.Mulik</h1>
+            <h1 id="scroll-to-top-name" class="text-lg font-semibold tracking-wider cursor-pointer hover:underline">Raj.Mulik</h1>
             <nav class="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
                 <a href="#tech-stack" class="hidden sm:inline hover:underline text-sm md:text-base">Tech-Stack</a>
                 <a href="#badges" class="hidden sm:inline hover:underline text-sm md:text-base">Badges</a>
@@ -216,8 +216,8 @@
                         <div
                             class="bg-white/10 dark:bg-white/5 backdrop-blur-md px-6 py-3 rounded-lg border border-black/50 dark:border-white/50 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg dark:hover:shadow-white/20">
                             <h3 class="text-xl font-semibold">Graphics Designing Freelancer</h3>
-                            <p class="text-md">Remote</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Freelance</p>
+                            <!-- <p class="text-md">Remote</p> -->
+                            <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Remote</p>
                             <p class="mt-2 text-base leading-relaxed">Designed posters, logos, and various graphics for
                                 clients, focusing on visual communication and design principles.</p>
                         </div>
@@ -243,23 +243,28 @@
             </section>
 
             <!-- Badges Section -->
-            <section id="badges" class="animated-section pt-12 pb-0">
+            <section id="badges" class="animated-section py-12">
                 <div class="bg-white/10 dark:bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-lg border border-black/50 dark:border-white/50">
                     <h2 class="text-3xl font-light mb-12">Badges</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                        <div class="text-center transform transition-transform duration-300 hover:scale-110">
+                        <a href="https://learn.microsoft.com/api/credentials/share/en-us/MulikRajCognizant-0919/9CFF2E49AE49AB88?sharingId=CCEEB6633847A59" target="_blank" rel="noopener noreferrer" class="text-center transform transition-transform duration-300 hover:scale-110 block">
                             <img src="Images/copilot_badge.png" alt="Copilot Badge" class="mx-auto h-24 w-24 object-contain">
-                            <p class="mt-2 font-monospace">GitHub Copilot Certification</p>
-                        </div>
-                        <div class="text-center transform transition-transform duration-300 hover:scale-110">
+                            <p class="mt-2 font-monospace flex items-center justify-center gap-2">
+                                GitHub Copilot Certification <img src="Images/shareicon.png" alt="Share Icon" style="width:1em;height:1em;vertical-align:middle;">
+                            </p>
+                        </a>
+                        <a href="https://leetcode.com/u/rajmulik511/" target="_blank" rel="noopener noreferrer" class="text-center transform transition-transform duration-300 hover:scale-110 block">
                             <img src="Images/leetcode_badge.png" alt="LeetCode Badge" class="mx-auto h-24 w-24 object-contain">
-                            <p class="mt-2 font-monospace">LeetCode</p>
-                        </div>
-                        <div class="text-center transform transition-transform duration-300 hover:scale-110">
+                            <p class="mt-2 font-monospace flex items-center justify-center gap-2">
+                                LeetCode <img src="Images/shareicon.png" alt="Share Icon" style="width:1em;height:1em;vertical-align:middle;">
+                            </p>
+                        </a>
+                        <a href="https://www.hackerrank.com/profile/rajmulik511" target="_blank" rel="noopener noreferrer" class="text-center transform transition-transform duration-300 hover:scale-110 block">
                             <img src="Images/javahackerr_badge.png" alt="Java HackerRank Badge" class="mx-auto h-24 w-24 object-contain">
-                            <p class="mt-2 font-monospace">HackerRank</p>
-                        </div>
-                        
+                            <p class="mt-2 font-monospace flex items-center justify-center gap-2">
+                                HackerRank <img src="Images/shareicon.png" alt="Share Icon" style="width:1em;height:1em;vertical-align:middle;">
+                            </p>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -466,6 +471,11 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Scroll to Top on Name Click Only ---
+            const scrollToTopName = document.getElementById('scroll-to-top-name');
+            scrollToTopName.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
             // --- Typing Animation ---
             const dynamicText = document.getElementById('dynamic-text');
             const words = ['Developer', 'Raj.'];
@@ -743,4 +753,3 @@
     </script>
 </body>
 </html>
-
