@@ -42,6 +42,38 @@
             opacity: 1;
         }
 
+        #badges .grid > a > img {
+            backface-visibility: hidden;
+        }
+        #badges.is-visible .grid > a > img {
+            animation: badge-flip-loop 4s ease-in-out infinite;
+        }
+        #badges.is-visible .grid > a:nth-child(2) > img {
+            animation-delay: 0.25s;
+        }
+        #badges.is-visible .grid > a:nth-child(3) > img {
+            animation-delay: 0.5s;
+        }
+        #badges.is-visible .grid > a:nth-child(4) > img {
+            animation-delay: 0.75s;
+        }
+        @keyframes badge-flip-loop {
+            0%, 70% {
+                transform: perspective(600px) rotateY(0);
+            }
+            85% {
+                transform: perspective(600px) rotateY(180deg);
+            }
+            100% {
+                transform: perspective(600px) rotateY(360deg);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #badges.is-visible .grid > a > img {
+                animation: none;
+            }
+        }
+
         /* Resume Button Animations */
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -628,7 +660,7 @@
             document.getElementById('year').textContent = new Date().getFullYear();
 
             // --- Scroll Animation ---
-            const animatedSections = document.querySelectorAll('.animated-section');
+            const animatedSections = document.querySelectorAll('.animated-section:not(#badges)');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -640,9 +672,23 @@
                 threshold: 0.1
             });
 
+            const badgesSection = document.getElementById('badges');
+            const badgesObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+
             animatedSections.forEach(section => {
                 observer.observe(section);
             });
+            badgesObserver.observe(badgesSection);
 
             // --- Space Particle Animation Functions ---
             function setupCanvas() {
@@ -759,6 +805,3 @@
     </script>
 </body>
 </html>
-
-
-
